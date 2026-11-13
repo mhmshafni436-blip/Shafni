@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Restock — Expenses & Reminders</title>
+  <meta name="description" content="Track recurring purchases, get reminded before you run out, and keep your monthly spending in check.">
+  <meta name="theme-color" content="#0f766e">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icon.svg">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <h1 id="page-title">Home</h1>
+    <button class="icon-btn" id="add-btn" aria-label="Add item">＋</button>
+  </header>
+
+  <main id="view" tabindex="-1"></main>
+
+  <nav class="tabs" aria-label="Main">
+    <button data-tab="home" class="active"><span>🏠</span>Home</button>
+    <button data-tab="shop"><span>🛒</span>Shop</button>
+    <button data-tab="items"><span>📦</span>Items</button>
+    <button data-tab="stats"><span>📊</span>Stats</button>
+    <button data-tab="settings"><span>⚙️</span>Settings</button>
+  </nav>
+
+  <dialog id="modal"><form method="dialog" id="modal-form"></form></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
