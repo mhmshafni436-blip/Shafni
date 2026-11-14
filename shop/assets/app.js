@@ -15,6 +15,8 @@
     audio: '<svg viewBox="0 0 48 48"><path d="M10 28v-4a14 14 0 0 1 28 0v4"/><rect x="6" y="27" width="8" height="13" rx="4"/><rect x="34" y="27" width="8" height="13" rx="4"/></svg>',
     case: '<svg viewBox="0 0 48 48"><rect x="13" y="5" width="22" height="38" rx="5"/><rect x="17" y="9" width="9" height="9" rx="3"/><circle cx="24" cy="29" r="6"/></svg>',
     home: '<svg viewBox="0 0 48 48"><path d="M16 22a8 8 0 0 1 16 0c0 4-3 5-3 9H19c0-4-3-5-3-9Z"/><path d="M20 36h8M21 40h6M24 6v4M10 12l3 3M38 12l-3 3"/></svg>',
+    powerbank: '<svg viewBox="0 0 48 48"><rect x="13" y="6" width="22" height="36" rx="5"/><path d="m26 15-5 9h6l-5 9"/></svg>',
+    car: '<svg viewBox="0 0 48 48"><path d="M8 30v-6l4-10h24l4 10v6Z"/><path d="M8 24h32M12 30v4M36 30v4"/><circle cx="15" cy="27" r="1.5"/><circle cx="33" cy="27" r="1.5"/></svg>',
     vacuum: '<svg viewBox="0 0 48 48"><path d="M10 14h18a6 6 0 0 1 6 6v4a6 6 0 0 1-6 6H10z"/><path d="M34 22h4l4 4-4 4h-4"/><path d="M14 30v6a4 4 0 0 0 4 4h6M18 20h8"/></svg>',
   };
   const catOf = (id) => categories.find((c) => c.id === id) || {};
@@ -84,6 +86,8 @@
     const list = products.filter((p) =>
       (activeCat === "all" || p.category === activeCat) &&
       (p.name + " " + p.brand + " " + catOf(p.category).name).toLowerCase().includes(q));
+    const order = (p) => categories.findIndex((c) => c.id === p.category);
+    list.sort((x, y) => order(x) - order(y));
     $("#empty").hidden = list.length > 0;
     $("#productGrid").innerHTML = list.map((p) => {
       const opts = optsOf(p);
@@ -100,7 +104,7 @@
           ${opts.length > 1 ? `<select class="opt" aria-label="Pack size">${opts.map((o, i) =>
             `<option value="${i}">${esc(o.label)} — ${money(o.price)}</option>`).join("")}</select>` : ""}
           <div class="product-foot">
-            <span class="price">${money(opts[0].price)}</span>
+            <div><span class="price">${money(opts[0].price)}</span>${p.was ? `<s class="was">${money(p.was)}</s>` : ""}</div>
             <button class="add-btn">Add to order</button>
           </div>
         </div>
