@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TranquilLink — Premium Tech. Proven Trust.</title>
+<meta name="description" content="TranquilLink, Dehiwala, Colombo — genuine earbuds, phone cases, chargers and home gadgets from Anker Soundcore, Ugreen, Green Lion, Remax and Yesido. Free delivery in Colombo, cash on delivery.">
+<meta name="theme-color" content="#0b2545">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Cpath d='M20 3 35 11.5v17L20 37 5 28.5v-17Z' fill='%23fff' stroke='%23e8281e' stroke-width='4' stroke-linejoin='round'/%3E%3Ctext x='20' y='25.5' font-family='Arial' font-weight='700' font-size='14' text-anchor='middle' fill='%230b2545'%3ETL%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<header class="header" id="top">
+  <div class="wrap header-inner">
+    <a href="#top" class="logo-img" aria-label="TranquilLink home"><img src="assets/img/logo.png" alt="TranquilLink — Premium Tech. Proven Trust." width="245" height="65"></a>
+    <nav class="nav" id="nav" aria-label="Main">
+      <a href="#shop">Shop</a>
+      <a href="#categories">Categories</a>
+      <a href="#why">Why us</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="header-actions">
+      <button class="cart-btn" id="cartBtn" aria-label="Open order list">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.4 11.2a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.5L21 8H6.2"/><circle cx="10" cy="20.5" r="1.3"/><circle cx="17" cy="20.5" r="1.3"/></svg>
+        <span class="cart-count" id="cartCount" hidden>0</span>
+      </button>
+      <button class="menu-btn" id="menuBtn" aria-label="Open menu" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <p class="eyebrow">Genuine brands · Dehiwala, Colombo</p>
+        <h1>Premium tech.<br>Proven trust.</h1>
+        <p class="lead">Genuine earbuds, power banks, chargers, cables, phone cases and car gear from Anker Soundcore, Ugreen, Baseus, WiWU and more — with free delivery in Colombo and cash on delivery.</p>
+        <div class="hero-cta">
+          <a href="#shop" class="btn btn-primary">Shop products</a>
+          <a href="#contact" class="btn btn-ghost">Chat with us</a>
+        </div>
+        <ul class="hero-stats">
+          <li><b>100% genuine</b><span>Original brands only</span></li>
+          <li><b>Free delivery</b><span>In Colombo</span></li>
+          <li><b>Cash on delivery</b><span>Pay when it arrives</span></li>
+        </ul>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <div class="orb"></div>
+        <div class="hero-card hc-1">
+          <div class="hc-icon" data-icon="audio"></div>
+          <div><b>Soundcore R50i NC</b><span>Adaptive noise cancelling</span></div>
+        </div>
+        <div class="hero-card hc-2">
+          <div class="hc-icon" data-icon="powerbank"></div>
+          <div><b>Power banks</b><span>10,000 to 48,000mAh</span></div>
+        </div>
+        <div class="hero-card hc-3">
+          <div class="hc-icon" data-icon="charger"></div>
+          <div><b>Car chargers</b><span>Up to 102W fast charging</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Brands -->
+  <section class="brands" aria-label="Brands we carry">
+    <div class="wrap brands-inner">
+      <span>Anker</span><span>Ugreen</span><span>Baseus</span><span>WiWU</span><span>Aspor</span><span>Yesido</span><span>Remax</span><span>Porodo</span>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="section" id="categories">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Browse</p>
+        <h2>Shop by category</h2>
+      </div>
+      <div class="cat-grid" id="catGrid"></div>
+    </div>
+  </section>
+
+  <!-- Shop -->
+  <section class="section section-alt" id="shop">
+    <div class="wrap">
+      <div class="section-head row">
+        <div>
+          <p class="eyebrow">Shop</p>
+          <h2>Our products</h2>
+        </div>
+        <label class="search">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
+          <input id="search" type="search" placeholder="Search products or brands" aria-label="Search products">
+        </label>
+      </div>
+      <div class="chips" id="chips" role="tablist" aria-label="Filter by category"></div>
+      <div class="product-grid" id="productGrid"></div>
+      <p class="empty" id="empty" hidden>No products match your search. <a href="#contact">Message us</a> to ask about it.</p>
+    </div>
+  </section>
+
+  <!-- Why -->
+  <section class="section" id="why">
+    <div class="wrap">
+      <div class="section-head center">
+        <p class="eyebrow">Why TranquilLink</p>
+        <h2>Peace of mind, built in.</h2>
+      </div>
+      <div class="why-grid">
+        <article class="why">
+          <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M12 3 4 6v6c0 4.5 3.4 8.3 8 9 4.6-.7 8-4.5 8-9V6l-8-3Z"/><path d="m8.5 12 2.5 2.5 4.5-5"/></svg></div>
+          <h3>100% genuine</h3>
+          <p>Original products from Anker Soundcore, Ugreen, Baseus, WiWU, Aspor, Yesido and more.</p>
+        </article>
+        <article class="why">
+          <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M4 8h13l-3-3M20 16H7l3 3"/></svg></div>
+          <h3>18-month Anker warranty</h3>
+          <p>1-to-1 replacement on most Anker products: faulty unit within 18 months? Message us on WhatsApp and we swap it.</p>
+        </article>
+        <article class="why">
+          <div class="why-icon"><svg viewBox="0 0 24 24"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/></svg></div>
+          <h3>Free delivery in Colombo</h3>
+          <p>Delivered to your door in Colombo at no extra charge.</p>
+        </article>
+        <article class="why">
+          <div class="why-icon"><svg viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg></div>
+          <h3>Cash on delivery</h3>
+          <p>No advance payment — pay when your order arrives.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to order -->
+  <section class="section section-dark">
+    <div class="wrap">
+      <div class="section-head center">
+        <p class="eyebrow">Simple ordering</p>
+        <h2>Order in three steps</h2>
+      </div>
+      <ol class="steps">
+        <li><span>1</span><h3>Pick your gear</h3><p>Add products to your order list from the shop.</p></li>
+        <li><span>2</span><h3>Send on WhatsApp</h3><p>We'll confirm availability and your delivery address.</p></li>
+        <li><span>3</span><h3>Receive & pay</h3><p>Pay cash when your order arrives.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="wrap narrow">
+      <div class="section-head center">
+        <p class="eyebrow">Questions</p>
+        <h2>Frequently asked</h2>
+      </div>
+      <div class="faq">
+        <details>
+          <summary>Is delivery free?</summary>
+          <p>Delivery is free in Colombo. For other areas, message us on WhatsApp and we'll let you know.</p>
+        </details>
+        <details>
+          <summary>Is cash on delivery available?</summary>
+          <p>Yes — you pay cash when your order arrives.</p>
+        </details>
+        <details>
+          <summary>What warranty do I get?</summary>
+          <p>Most Anker products come with an 18-month warranty with 1-to-1 replacement: if the unit is faulty within 18 months, message us on WhatsApp and we replace it with the same product. Other products list their warranty on the product card. Warranty terms vary by product, so ask us before you buy.</p>
+        </details>
+        <details>
+          <summary>Are the products genuine?</summary>
+          <p>Yes. We sell original products from brands such as Anker Soundcore, Ugreen, Baseus, WiWU, Aspor, Yesido, Remax, Green Lion, Porodo and LDNIO.</p>
+        </details>
+        <details>
+          <summary>How do I order?</summary>
+          <p>Add products to your order list and tap “Order via WhatsApp”, or message us directly on WhatsApp at 071 544 7732.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section section-alt" id="contact">
+    <div class="wrap contact">
+      <div>
+        <p class="eyebrow">Get in touch</p>
+        <h2>Let's find the right gear for you.</h2>
+        <p class="lead">Message us on WhatsApp to order or to ask about any product.</p>
+        <ul class="contact-list">
+          <li><span class="ci">☎</span><a id="phoneLink" href="#">Phone</a></li>
+          <li><span class="ci">@</span><span id="handleText">@tranquil_link</span></li>
+          <li><span class="ci">⌖</span><span id="locationText">Colombo</span></li>
+        </ul>
+      </div>
+      <form class="contact-form" id="contactForm">
+        <div class="field"><label for="cName">Your name</label><input id="cName" required autocomplete="name"></div>
+        <div class="field"><label for="cPhone">Phone (optional)</label><input id="cPhone" type="tel" autocomplete="tel"></div>
+        <div class="field"><label for="cMsg">What are you looking for?</label><textarea id="cMsg" rows="4" required placeholder="e.g. Is the Soundcore R50i NC available?"></textarea></div>
+        <button class="btn btn-wa" type="submit">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg>
+          Send via WhatsApp
+        </button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <div>
+      <a href="#top" class="logo-img" style="display:inline-block"><img src="assets/img/logo.png" alt="TranquilLink — Premium Tech. Proven Trust." width="245" height="65"></a>
+      <p>Premium tech. Proven trust. — Dehiwala, Colombo.</p>
+    </div>
+    <nav aria-label="Footer">
+      <a href="#shop">Shop</a><a href="#why">Why us</a><a href="#faq">FAQ</a><a href="#contact">Contact</a>
+    </nav>
+    <p class="copy">© <span id="year"></span> TranquilLink. All rights reserved.</p>
+  </div>
+</footer>
+
+<!-- Floating WhatsApp -->
+<a class="wa-float" id="waFloat" href="#" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/><path d="M9 9.5c.3 2 2.5 4.2 4.5 4.5l1-1 1.5.7-.4 1.4c-3.2.3-6.5-3-6.2-6.2l1.4-.4.7 1.5-1 1Z" class="fill"/></svg>
+</a>
+
+<!-- Order list drawer -->
+<div class="drawer-backdrop" id="backdrop" hidden></div>
+<aside class="drawer" id="drawer" aria-label="Your order list" aria-hidden="true">
+  <div class="drawer-head">
+    <h2>Your order list</h2>
+    <button class="icon-btn" id="closeDrawer" aria-label="Close">✕</button>
+  </div>
+  <div class="drawer-body" id="cartItems"></div>
+  <div class="drawer-foot">
+    <div class="total"><span>Estimated total</span><b id="cartTotal">Rs. 0</b></div>
+    <p class="note">Free delivery in Colombo · Cash on delivery</p>
+    <button class="btn btn-wa block" id="checkout">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg>
+      Order via WhatsApp
+    </button>
+  </div>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/products.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
