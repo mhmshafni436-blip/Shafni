@@ -1,5 +1,5 @@
 // Offline cache for Restock. Bump VERSION when app files change.
-const VERSION = 'restock-v1';
+const VERSION = 'restock-v2';
 const ASSETS = ['./', 'index.html', 'styles.css', 'app.js', 'manifest.webmanifest', 'icon.svg'];
 
 self.addEventListener('install', (e) => {
