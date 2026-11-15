@@ -194,3 +194,5 @@ dialog::backdrop { background: rgba(0,0,0,.45); }
 /* Common-items picker */
 .cat-head { position: sticky; top: 0; z-index: 1; background: var(--surface-2); border-radius: 10px; padding: 8px 12px; margin-top: 4px; }
 .cat-head .count { margin-left: auto; color: var(--muted); font-size: .8rem; }
+.qty-in { width: 64px; min-height: 38px; padding: 6px 8px; text-align: right; flex: none; }
+.qty-unit { width: 52px; font-size: .82rem; color: var(--muted); flex: none; }

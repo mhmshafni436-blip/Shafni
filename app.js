@@ -45,6 +45,24 @@ const SUGGESTIONS = [
   S('TV / streaming', 'Subscriptions', 1, 'month'),
 ];
 
+// Typical amount bought each time, for a small household — adjust to suit.
+const QTY = {
+  'Rice': [5, 'kg'], 'Flour': [2, 'kg'], 'Sugar': [2, 'kg'], 'Salt': [1, 'kg'], 'Cooking oil': [2, 'L'], 'Lentils & beans': [1, 'kg'],
+  'Pasta & noodles': [2, 'packs'], 'Spices': [4, 'packs'], 'Tea': [1, 'pack'], 'Coffee': [1, 'jar'], 'Onions': [2, 'kg'], 'Potatoes': [2, 'kg'],
+  'Garlic & ginger': [1, 'pack'], 'Vegetables': [2, 'kg'], 'Fruits': [2, 'kg'], 'Snacks & biscuits': [3, 'packs'], 'Breakfast cereal': [1, 'box'],
+  'Sauces & condiments': [2, 'bottles'], 'Canned food': [4, 'cans'], 'Drinking water': [10, 'L'],
+  'Milk': [1, 'L'], 'Eggs': [10, 'pcs'], 'Yogurt': [4, 'cups'], 'Butter': [1, 'pack'], 'Cheese': [1, 'pack'], 'Milk powder': [1, 'pack'],
+  'Chicken': [1, 'kg'], 'Fish': [1, 'kg'], 'Meat': [1, 'kg'], 'Bread': [1, 'loaf'],
+  'Dish soap': [1, 'bottle'], 'Laundry detergent': [1, 'kg'], 'Toilet paper': [4, 'rolls'], 'Tissues': [2, 'boxes'], 'Garbage bags': [1, 'roll'],
+  'Floor cleaner': [1, 'bottle'], 'Toilet cleaner': [1, 'bottle'], 'Sponges & scrubbers': [2, 'pcs'], 'Insect repellent': [1, 'pc'],
+  'Air freshener': [1, 'pc'], 'Batteries': [4, 'pcs'],
+  'Soap / body wash': [4, 'bars'], 'Toothpaste': [1, 'tube'], 'Shampoo': [1, 'bottle'], 'Hand wash': [1, 'bottle'], 'Deodorant': [1, 'pc'],
+  'Razors': [1, 'pack'], 'Sanitary pads': [2, 'packs'], 'Toothbrush': [2, 'pcs'], 'Skin care': [1, 'pc'],
+  'Diapers': [1, 'pack'], 'Baby wipes': [2, 'packs'], 'Baby formula': [1, 'tin'], 'Medicines': [1, 'pack'], 'Vitamins': [1, 'bottle'],
+  'Gas cylinder': [1, 'cylinder'], 'Fuel': [10, 'L'], 'Pet food': [2, 'kg'],
+};
+SUGGESTIONS.forEach((s) => { [s.qty, s.unit] = QTY[s.name] || [1, '']; });
+
 function load() {
   try {
     const raw = localStorage.getItem(STORE_KEY);
@@ -119,6 +137,7 @@ function dueInfo(item) {
 }
 function remindWindow(item) { return item.remindDays ?? state.settings.remindDays ?? 1; }
 function needsAttention(item) { return item.active !== false && daysBetween(today(), item.nextDue) <= remindWindow(item); }
+function qtyLabel(i) { return (Number(i.qty) || 1) !== 1 || i.unit ? `${i.qty || 1}${i.unit ? ' ' + i.unit : ''}` : ''; }
 function emojiFor(item) { return item.emoji || CAT_EMOJI[item.category] || '📦'; }
 
 function monthKey(dateStr) { return dateStr.slice(0, 7); }
@@ -180,7 +199,7 @@ function itemRow(item, { actions = true } = {}) {
   return `<div class="row ${item.active === false ? 'paused' : ''}" data-id="${item.id}">
     <div class="emoji">${esc(emojiFor(item))}</div>
     <div class="main" data-act="edit">
-      <div class="name">${esc(item.name)}${item.qty > 1 ? ` <span class="meta">×${esc(item.qty)}${item.unit ? ' ' + esc(item.unit) : ''}</span>` : ''}</div>
+      <div class="name">${esc(item.name)}${qtyLabel(item) ? ` <span class="meta">· ${esc(qtyLabel(item))}</span>` : ''}</div>
       <div class="meta">${item.active === false ? '<span class="pill later">Paused</span>' : `<span class="pill ${di.cls}">${di.text}</span>`} · ${freqLabel(item)}${itemCost(item) ? ' · ' + money(itemCost(item)) : ''}${item.store ? ' · ' + esc(item.store) : ''}</div>
     </div>
     ${actions && item.active !== false ? `<div class="actions">
@@ -258,7 +277,7 @@ function viewShop() {
         <label class="row check-row ${on ? 'done' : ''}">
           <input type="checkbox" data-check="${i.id}" ${on ? 'checked' : ''}>
           <div class="emoji">${esc(emojiFor(i))}</div>
-          <div class="main"><div class="name">${esc(i.name)}${i.qty > 1 ? ` ×${esc(i.qty)}${i.unit ? ' ' + esc(i.unit) : ''}` : ''}</div>
+          <div class="main"><div class="name">${esc(i.name)}${qtyLabel(i) ? ` <span class="meta">· ${esc(qtyLabel(i))}</span>` : ''}</div>
           <div class="meta"><span class="pill ${di.cls}">${di.text}</span>${itemCost(i) ? ' · ' + money(itemCost(i)) : ''}</div></div>
         </label>`; }).join('')}</div>`).join('')
       + `<div class="sticky-total"><div><div class="help">Estimated total</div><strong>${money(checked.length ? checkedTotal : total)}</strong>${checked.length ? ` <span class="help">(${checked.length} of ${items.length} ticked)</span>` : ''}</div>
@@ -475,7 +494,7 @@ function openItemModal(item) {
     });
     f.name.addEventListener('change', () => {
       const s = SUGGESTIONS.find((x) => x.name.toLowerCase() === f.name.value.trim().toLowerCase());
-      if (s && isNew) { f.category.value = s.category; f.freqN.value = s.freqN; f.freqUnit.value = s.freqUnit; summary(); }
+      if (s && isNew) { f.category.value = s.category; f.freqN.value = s.freqN; f.freqUnit.value = s.freqUnit; f.qty.value = s.qty; f.unit.value = s.unit; summary(); }
     });
     f.querySelector('[data-del]')?.addEventListener('click', () => {
       if (!confirm(`Delete "${item.name}"? Its purchase history is kept.`)) return;
@@ -564,20 +583,21 @@ function openQuickStart() {
   const groups = CATEGORIES.map(([c]) => [c, avail.map((s, k) => [s, k]).filter(([s]) => s.category === c)]).filter(([, a]) => a.length);
   const firstTime = !state.items.length;
   openModal(`<h3>⚡ Common items</h3>
-    <div class="help">The essentials are ticked for you. Untick what you don't buy, tick anything else you do. Prices and dates can be set later.</div>
+    <div class="help">The essentials are ticked for you. Untick what you don't buy, tick anything else you do, and change any quantity to what you need each time. Prices can be set later.</div>
     <div class="chips" style="margin:0"><button type="button" class="chip" data-pick="essential">⭐ Essentials</button><button type="button" class="chip" data-pick="all">Select all</button><button type="button" class="chip" data-pick="none">Clear</button></div>
     <div class="list" style="max-height:44vh;overflow:auto">${groups.map(([c, arr]) => `
       <label class="check-row cat-head"><input type="checkbox" data-cat="${esc(c)}"><strong>${CAT_EMOJI[c]} ${esc(c)}</strong><span class="count">${arr.length}</span></label>
-      ${arr.map(([s, k]) => `<label class="row check-row"><input type="checkbox" name="s" value="${k}" data-in="${esc(c)}" ${s.essential && firstTime ? 'checked' : ''}><div class="main"><div class="name">${esc(s.name)}${s.essential ? ' <span class="meta">⭐</span>' : ''}</div><div class="meta">${freqLabel(s)}</div></div></label>`).join('')}`).join('')}</div>
+      ${arr.map(([s, k]) => `<label class="row check-row"><input type="checkbox" name="s" value="${k}" data-in="${esc(c)}" ${s.essential && firstTime ? 'checked' : ''}><div class="main"><div class="name">${esc(s.name)}${s.essential ? ' <span class="meta">⭐</span>' : ''}</div><div class="meta">${freqLabel(s)}</div></div>
+        <input class="qty-in" type="number" name="q${k}" value="${s.qty}" min="0" step="any" inputmode="decimal" aria-label="Quantity of ${esc(s.name)}"><span class="qty-unit">${esc(s.unit)}</span></label>`).join('')}`).join('')}</div>
     <div class="field"><label for="q-first">First reminder</label><select id="q-first" name="first"><option value="cycle">After one cycle — I have these at home now</option><option value="today">Today — I need to buy them now</option></select></div>
     <div class="modal-actions"><button type="button" class="btn" data-own>＋ Add my own</button><span class="spacer"></span>
       <button class="btn" value="cancel" formnovalidate>Cancel</button><button class="btn primary" value="ok" id="q-add">Add</button></div>`,
   (fd) => {
-    const picks = fd.getAll('s').map((k) => avail[Number(k)]);
+    const picks = fd.getAll('s').map((k) => ({ ...avail[Number(k)], qty: Number(fd.get('q' + k)) || avail[Number(k)].qty }));
     if (!picks.length) { toast('Tick at least one item'); return false; }
     const cycle = fd.get('first') === 'cycle';
     snapshot();
-    picks.forEach(({ essential, ...s }) => state.items.push({ id: uid(), active: true, createdAt: today(), price: 0, qty: 1, unit: '', store: '', notes: '', remindDays: null,
+    picks.forEach(({ essential, ...s }) => state.items.push({ id: uid(), active: true, createdAt: today(), price: 0, store: '', notes: '', remindDays: null,
       nextDue: cycle ? addInterval(today(), s.freqN, s.freqUnit) : today(), ...s }));
     save(); currentTab = 'items'; render(); toast(`${picks.length} items added — tap one to set its price`, true);
   }, (f) => {
@@ -606,7 +626,7 @@ function checkout() {
 }
 async function shareList() {
   const items = sortByDue(activeItems().filter((i) => daysBetween(today(), i.nextDue) <= ui.shopHorizon));
-  const text = '🛒 Shopping list\n' + items.map((i) => `${ui.shopChecked.has(i.id) ? '☑' : '☐'} ${i.name}${i.qty > 1 ? ` ×${i.qty}${i.unit ? ' ' + i.unit : ''}` : ''}${i.store ? ` (${i.store})` : ''}`).join('\n');
+  const text = '🛒 Shopping list\n' + items.map((i) => `${ui.shopChecked.has(i.id) ? '☑' : '☐'} ${i.name}${qtyLabel(i) ? ` — ${qtyLabel(i)}` : ''}${i.store ? ` (${i.store})` : ''}`).join('\n');
   try {
     if (navigator.share) await navigator.share({ title: 'Shopping list', text });
     else { await navigator.clipboard.writeText(text); toast('List copied — paste it in WhatsApp or SMS'); }
