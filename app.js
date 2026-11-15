@@ -15,29 +15,53 @@ const CATEGORIES = [
 ];
 const CAT_EMOJI = Object.fromEntries(CATEGORIES);
 
+// Catalogue of commonly bought things. `e: 1` marks the essentials most homes need.
+const S = (name, category, freqN, freqUnit, e = 0) => ({ name, category, freqN, freqUnit, essential: !!e });
 const SUGGESTIONS = [
-  { name: 'Milk', category: 'Dairy & Eggs', freqN: 2, freqUnit: 'day' },
-  { name: 'Bread', category: 'Bakery', freqN: 2, freqUnit: 'day' },
-  { name: 'Eggs', category: 'Dairy & Eggs', freqN: 1, freqUnit: 'week' },
-  { name: 'Vegetables', category: 'Groceries', freqN: 1, freqUnit: 'week' },
-  { name: 'Fruits', category: 'Groceries', freqN: 1, freqUnit: 'week' },
-  { name: 'Rice', category: 'Groceries', freqN: 1, freqUnit: 'month' },
-  { name: 'Cooking oil', category: 'Groceries', freqN: 1, freqUnit: 'month' },
-  { name: 'Sugar', category: 'Groceries', freqN: 1, freqUnit: 'month' },
-  { name: 'Tea / Coffee', category: 'Groceries', freqN: 1, freqUnit: 'month' },
-  { name: 'Dish soap', category: 'Household', freqN: 1, freqUnit: 'month' },
-  { name: 'Laundry detergent', category: 'Household', freqN: 1, freqUnit: 'month' },
-  { name: 'Toilet paper', category: 'Household', freqN: 2, freqUnit: 'week' },
-  { name: 'Toothpaste', category: 'Personal care', freqN: 2, freqUnit: 'month' },
-  { name: 'Shampoo', category: 'Personal care', freqN: 2, freqUnit: 'month' },
-  { name: 'Gas cylinder', category: 'Utilities & Bills', freqN: 2, freqUnit: 'month' },
-  { name: 'Electricity bill', category: 'Utilities & Bills', freqN: 1, freqUnit: 'month' },
-  { name: 'Water bill', category: 'Utilities & Bills', freqN: 1, freqUnit: 'month' },
-  { name: 'Internet', category: 'Utilities & Bills', freqN: 1, freqUnit: 'month' },
-  { name: 'Mobile reload', category: 'Utilities & Bills', freqN: 1, freqUnit: 'month' },
-  { name: 'Fuel', category: 'Fuel & Transport', freqN: 1, freqUnit: 'week' },
-  { name: 'Diapers', category: 'Baby & Kids', freqN: 1, freqUnit: 'week' },
+  S('Rice', 'Groceries', 1, 'month', 1), S('Flour', 'Groceries', 1, 'month', 1), S('Sugar', 'Groceries', 1, 'month', 1),
+  S('Salt', 'Groceries', 2, 'month', 1), S('Cooking oil', 'Groceries', 1, 'month', 1), S('Lentils & beans', 'Groceries', 2, 'week', 1),
+  S('Pasta & noodles', 'Groceries', 2, 'week'), S('Spices', 'Groceries', 1, 'month', 1), S('Tea', 'Groceries', 1, 'month', 1),
+  S('Coffee', 'Groceries', 1, 'month'), S('Onions', 'Groceries', 1, 'week', 1), S('Potatoes', 'Groceries', 1, 'week', 1),
+  S('Garlic & ginger', 'Groceries', 2, 'week'), S('Vegetables', 'Groceries', 3, 'day', 1), S('Fruits', 'Groceries', 1, 'week', 1),
+  S('Snacks & biscuits', 'Groceries', 1, 'week'), S('Breakfast cereal', 'Groceries', 2, 'week'), S('Sauces & condiments', 'Groceries', 1, 'month'),
+  S('Canned food', 'Groceries', 1, 'month'), S('Drinking water', 'Groceries', 1, 'week'),
+  S('Milk', 'Dairy & Eggs', 2, 'day', 1), S('Eggs', 'Dairy & Eggs', 1, 'week', 1), S('Yogurt', 'Dairy & Eggs', 1, 'week'),
+  S('Butter', 'Dairy & Eggs', 2, 'week'), S('Cheese', 'Dairy & Eggs', 2, 'week'), S('Milk powder', 'Dairy & Eggs', 1, 'month'),
+  S('Chicken', 'Meat & Fish', 1, 'week', 1), S('Fish', 'Meat & Fish', 1, 'week'), S('Meat', 'Meat & Fish', 1, 'week'),
+  S('Bread', 'Bakery', 2, 'day', 1),
+  S('Dish soap', 'Household', 1, 'month', 1), S('Laundry detergent', 'Household', 1, 'month', 1), S('Toilet paper', 'Household', 2, 'week', 1),
+  S('Tissues', 'Household', 2, 'week'), S('Garbage bags', 'Household', 1, 'month', 1), S('Floor cleaner', 'Household', 1, 'month'),
+  S('Toilet cleaner', 'Household', 1, 'month'), S('Sponges & scrubbers', 'Household', 1, 'month'), S('Insect repellent', 'Household', 1, 'month'),
+  S('Air freshener', 'Household', 2, 'month'), S('Batteries', 'Household', 3, 'month'),
+  S('Soap / body wash', 'Personal care', 1, 'month', 1), S('Toothpaste', 'Personal care', 2, 'month', 1), S('Shampoo', 'Personal care', 2, 'month', 1),
+  S('Hand wash', 'Personal care', 1, 'month'), S('Deodorant', 'Personal care', 2, 'month'), S('Razors', 'Personal care', 2, 'month'),
+  S('Sanitary pads', 'Personal care', 1, 'month'), S('Toothbrush', 'Personal care', 3, 'month'), S('Skin care', 'Personal care', 2, 'month'),
+  S('Diapers', 'Baby & Kids', 1, 'week'), S('Baby wipes', 'Baby & Kids', 2, 'week'), S('Baby formula', 'Baby & Kids', 2, 'week'),
+  S('Medicines', 'Health', 1, 'month'), S('Vitamins', 'Health', 1, 'month'),
+  S('Rent', 'Utilities & Bills', 1, 'month'), S('Electricity bill', 'Utilities & Bills', 1, 'month', 1), S('Water bill', 'Utilities & Bills', 1, 'month', 1),
+  S('Internet', 'Utilities & Bills', 1, 'month', 1), S('Mobile reload', 'Utilities & Bills', 1, 'month', 1), S('Gas cylinder', 'Utilities & Bills', 2, 'month', 1),
+  S('Fuel', 'Fuel & Transport', 1, 'week'), S('Bus / train pass', 'Fuel & Transport', 1, 'month'), S('Vehicle service', 'Fuel & Transport', 3, 'month'),
+  S('Pet food', 'Pets', 2, 'week'),
+  S('TV / streaming', 'Subscriptions', 1, 'month'),
 ];
+
+// Typical amount bought each time, for a small household — adjust to suit.
+const QTY = {
+  'Rice': [5, 'kg'], 'Flour': [2, 'kg'], 'Sugar': [2, 'kg'], 'Salt': [1, 'kg'], 'Cooking oil': [2, 'L'], 'Lentils & beans': [1, 'kg'],
+  'Pasta & noodles': [2, 'packs'], 'Spices': [4, 'packs'], 'Tea': [1, 'pack'], 'Coffee': [1, 'jar'], 'Onions': [2, 'kg'], 'Potatoes': [2, 'kg'],
+  'Garlic & ginger': [1, 'pack'], 'Vegetables': [2, 'kg'], 'Fruits': [2, 'kg'], 'Snacks & biscuits': [3, 'packs'], 'Breakfast cereal': [1, 'box'],
+  'Sauces & condiments': [2, 'bottles'], 'Canned food': [4, 'cans'], 'Drinking water': [10, 'L'],
+  'Milk': [1, 'L'], 'Eggs': [10, 'pcs'], 'Yogurt': [4, 'cups'], 'Butter': [1, 'pack'], 'Cheese': [1, 'pack'], 'Milk powder': [1, 'pack'],
+  'Chicken': [1, 'kg'], 'Fish': [1, 'kg'], 'Meat': [1, 'kg'], 'Bread': [1, 'loaf'],
+  'Dish soap': [1, 'bottle'], 'Laundry detergent': [1, 'kg'], 'Toilet paper': [4, 'rolls'], 'Tissues': [2, 'boxes'], 'Garbage bags': [1, 'roll'],
+  'Floor cleaner': [1, 'bottle'], 'Toilet cleaner': [1, 'bottle'], 'Sponges & scrubbers': [2, 'pcs'], 'Insect repellent': [1, 'pc'],
+  'Air freshener': [1, 'pc'], 'Batteries': [4, 'pcs'],
+  'Soap / body wash': [4, 'bars'], 'Toothpaste': [1, 'tube'], 'Shampoo': [1, 'bottle'], 'Hand wash': [1, 'bottle'], 'Deodorant': [1, 'pc'],
+  'Razors': [1, 'pack'], 'Sanitary pads': [2, 'packs'], 'Toothbrush': [2, 'pcs'], 'Skin care': [1, 'pc'],
+  'Diapers': [1, 'pack'], 'Baby wipes': [2, 'packs'], 'Baby formula': [1, 'tin'], 'Medicines': [1, 'pack'], 'Vitamins': [1, 'bottle'],
+  'Gas cylinder': [1, 'cylinder'], 'Fuel': [10, 'L'], 'Pet food': [2, 'kg'],
+};
+SUGGESTIONS.forEach((s) => { [s.qty, s.unit] = QTY[s.name] || [1, '']; });
 
 function load() {
   try {
@@ -113,6 +137,7 @@ function dueInfo(item) {
 }
 function remindWindow(item) { return item.remindDays ?? state.settings.remindDays ?? 1; }
 function needsAttention(item) { return item.active !== false && daysBetween(today(), item.nextDue) <= remindWindow(item); }
+function qtyLabel(i) { return (Number(i.qty) || 1) !== 1 || i.unit ? `${i.qty || 1}${i.unit ? ' ' + i.unit : ''}` : ''; }
 function emojiFor(item) { return item.emoji || CAT_EMOJI[item.category] || '📦'; }
 
 function monthKey(dateStr) { return dateStr.slice(0, 7); }
@@ -174,7 +199,7 @@ function itemRow(item, { actions = true } = {}) {
   return `<div class="row ${item.active === false ? 'paused' : ''}" data-id="${item.id}">
     <div class="emoji">${esc(emojiFor(item))}</div>
     <div class="main" data-act="edit">
-      <div class="name">${esc(item.name)}${item.qty > 1 ? ` <span class="meta">×${esc(item.qty)}${item.unit ? ' ' + esc(item.unit) : ''}</span>` : ''}</div>
+      <div class="name">${esc(item.name)}${qtyLabel(item) ? ` <span class="meta">· ${esc(qtyLabel(item))}</span>` : ''}</div>
       <div class="meta">${item.active === false ? '<span class="pill later">Paused</span>' : `<span class="pill ${di.cls}">${di.text}</span>`} · ${freqLabel(item)}${itemCost(item) ? ' · ' + money(itemCost(item)) : ''}${item.store ? ' · ' + esc(item.store) : ''}</div>
     </div>
     ${actions && item.active !== false ? `<div class="actions">
@@ -233,7 +258,7 @@ function onboarding() {
     <div style="font-size:3rem">🛒</div>
     <h2 style="justify-content:center;font-size:1.25rem">Welcome to Restock</h2>
     <p class="help" style="font-size:.95rem">Add the things you buy regularly — milk every 2 days, rice every month, gas every 2 months — and Restock will remind you before they're due and track what you spend.</p>
-    <div class="btn-row" style="justify-content:center"><button class="btn primary" data-act="add">＋ Add an item</button><button class="btn" data-act="quickstart">⚡ Quick start</button></div>
+    <div class="btn-row" style="justify-content:center"><button class="btn primary" data-act="add">＋ Add an item</button><button class="btn" data-act="quickstart">⚡ Add common items</button></div>
   </div>`;
 }
 
@@ -252,7 +277,7 @@ function viewShop() {
         <label class="row check-row ${on ? 'done' : ''}">
           <input type="checkbox" data-check="${i.id}" ${on ? 'checked' : ''}>
           <div class="emoji">${esc(emojiFor(i))}</div>
-          <div class="main"><div class="name">${esc(i.name)}${i.qty > 1 ? ` ×${esc(i.qty)}${i.unit ? ' ' + esc(i.unit) : ''}` : ''}</div>
+          <div class="main"><div class="name">${esc(i.name)}${qtyLabel(i) ? ` <span class="meta">· ${esc(qtyLabel(i))}</span>` : ''}</div>
           <div class="meta"><span class="pill ${di.cls}">${di.text}</span>${itemCost(i) ? ' · ' + money(itemCost(i)) : ''}</div></div>
         </label>`; }).join('')}</div>`).join('')
       + `<div class="sticky-total"><div><div class="help">Estimated total</div><strong>${money(checked.length ? checkedTotal : total)}</strong>${checked.length ? ` <span class="help">(${checked.length} of ${items.length} ticked)</span>` : ''}</div>
@@ -271,7 +296,8 @@ function viewItems() {
     <div class="chips">${cats.map((c) => `<button class="chip ${ui.itemFilter === c ? 'active' : ''}" data-filter="${esc(c)}">${c === 'All' ? 'All' : esc((CAT_EMOJI[c] || '') + ' ' + c)}</button>`).join('')}</div>
     ${list.length ? `<div class="list">${list.map((i) => itemRow(i, { actions: false })).join('')}</div>`
       : `<div class="empty"><div class="big">📦</div>${state.items.length ? 'No matching items.' : 'No items yet. Tap ＋ to add one.'}</div>`}
-    ${state.items.length ? `<p class="help" style="text-align:center;margin-top:16px">Tap an item to edit, pause or delete it.</p>` : ''}`;
+    <div class="btn-row" style="justify-content:center;margin-top:16px"><button class="btn" data-act="quickstart">⚡ Add common items</button><button class="btn" data-act="add">＋ Add my own</button></div>
+    ${state.items.length ? `<p class="help" style="text-align:center">Tap an item to edit, pause or delete it.</p>` : ''}`;
 }
 
 function viewStats() {
@@ -400,6 +426,7 @@ function bindView(v) {
 const modal = $('#modal'), form = $('#modal-form');
 function openModal(html, onSubmit, bind) {
   form.innerHTML = html;
+  form.onchange = form.oninput = null;
   form.onsubmit = (e) => {
     const submitter = e.submitter;
     if (submitter?.value === 'cancel') return;
@@ -467,7 +494,7 @@ function openItemModal(item) {
     });
     f.name.addEventListener('change', () => {
       const s = SUGGESTIONS.find((x) => x.name.toLowerCase() === f.name.value.trim().toLowerCase());
-      if (s && isNew) { f.category.value = s.category; f.freqN.value = s.freqN; f.freqUnit.value = s.freqUnit; summary(); }
+      if (s && isNew) { f.category.value = s.category; f.freqN.value = s.freqN; f.freqUnit.value = s.freqUnit; f.qty.value = s.qty; f.unit.value = s.unit; summary(); }
     });
     f.querySelector('[data-del]')?.addEventListener('click', () => {
       if (!confirm(`Delete "${item.name}"? Its purchase history is kept.`)) return;
@@ -552,16 +579,40 @@ function openExpenseModal() {
 function openQuickStart() {
   const existing = new Set(state.items.map((i) => i.name.toLowerCase()));
   const avail = SUGGESTIONS.filter((s) => !existing.has(s.name.toLowerCase()));
-  if (!avail.length) return toast('All common items are already added');
-  openModal(`<h3>⚡ Quick start</h3><div class="help">Tick what you buy regularly. You can set prices and dates later.</div>
-    <div class="list" style="max-height:50vh;overflow:auto">${avail.map((s, k) => `<label class="row check-row"><input type="checkbox" name="s" value="${k}"><div class="emoji">${CAT_EMOJI[s.category]}</div><div class="main"><div class="name">${esc(s.name)}</div><div class="meta">${freqLabel(s)}</div></div></label>`).join('')}</div>
-    <div class="modal-actions"><button class="btn" value="cancel" formnovalidate>Cancel</button><button class="btn primary" value="ok">Add selected</button></div>`,
+  if (!avail.length) return toast('Everything in the list is already added — tap ＋ to add your own');
+  const groups = CATEGORIES.map(([c]) => [c, avail.map((s, k) => [s, k]).filter(([s]) => s.category === c)]).filter(([, a]) => a.length);
+  const firstTime = !state.items.length;
+  openModal(`<h3>⚡ Common items</h3>
+    <div class="help">The essentials are ticked for you. Untick what you don't buy, tick anything else you do, and change any quantity to what you need each time. Prices can be set later.</div>
+    <div class="chips" style="margin:0"><button type="button" class="chip" data-pick="essential">⭐ Essentials</button><button type="button" class="chip" data-pick="all">Select all</button><button type="button" class="chip" data-pick="none">Clear</button></div>
+    <div class="list" style="max-height:44vh;overflow:auto">${groups.map(([c, arr]) => `
+      <label class="check-row cat-head"><input type="checkbox" data-cat="${esc(c)}"><strong>${CAT_EMOJI[c]} ${esc(c)}</strong><span class="count">${arr.length}</span></label>
+      ${arr.map(([s, k]) => `<label class="row check-row"><input type="checkbox" name="s" value="${k}" data-in="${esc(c)}" ${s.essential && firstTime ? 'checked' : ''}><div class="main"><div class="name">${esc(s.name)}${s.essential ? ' <span class="meta">⭐</span>' : ''}</div><div class="meta">${freqLabel(s)}</div></div>
+        <input class="qty-in" type="number" name="q${k}" value="${s.qty}" min="0" step="any" inputmode="decimal" aria-label="Quantity of ${esc(s.name)}"><span class="qty-unit">${esc(s.unit)}</span></label>`).join('')}`).join('')}</div>
+    <div class="field"><label for="q-first">First reminder</label><select id="q-first" name="first"><option value="cycle">After one cycle — I have these at home now</option><option value="today">Today — I need to buy them now</option></select></div>
+    <div class="modal-actions"><button type="button" class="btn" data-own>＋ Add my own</button><span class="spacer"></span>
+      <button class="btn" value="cancel" formnovalidate>Cancel</button><button class="btn primary" value="ok" id="q-add">Add</button></div>`,
   (fd) => {
-    const picks = fd.getAll('s').map((k) => avail[Number(k)]);
-    if (!picks.length) return;
+    const picks = fd.getAll('s').map((k) => ({ ...avail[Number(k)], qty: Number(fd.get('q' + k)) || avail[Number(k)].qty }));
+    if (!picks.length) { toast('Tick at least one item'); return false; }
+    const cycle = fd.get('first') === 'cycle';
     snapshot();
-    picks.forEach((s) => state.items.push({ id: uid(), active: true, createdAt: today(), price: 0, qty: 1, unit: '', store: '', notes: '', remindDays: null, nextDue: today(), ...s }));
+    picks.forEach(({ essential, ...s }) => state.items.push({ id: uid(), active: true, createdAt: today(), price: 0, store: '', notes: '', remindDays: null,
+      nextDue: cycle ? addInterval(today(), s.freqN, s.freqUnit) : today(), ...s }));
     save(); currentTab = 'items'; render(); toast(`${picks.length} items added — tap one to set its price`, true);
+  }, (f) => {
+    const boxes = [...f.querySelectorAll('input[name=s]')], heads = [...f.querySelectorAll('[data-cat]')];
+    const sync = () => {
+      heads.forEach((h) => { const mine = boxes.filter((x) => x.dataset.in === h.dataset.cat), on = mine.filter((x) => x.checked).length;
+        h.checked = on === mine.length; h.indeterminate = on > 0 && on < mine.length; });
+      const n = boxes.filter((x) => x.checked).length; $('#q-add').textContent = n ? `Add ${n} item${n > 1 ? 's' : ''}` : 'Add';
+    };
+    f.onchange = (e) => { const c = e.target.dataset.cat; if (c) boxes.forEach((x) => { if (x.dataset.in === c) x.checked = e.target.checked; }); sync(); };
+    f.querySelectorAll('[data-pick]').forEach((b) => b.onclick = () => {
+      const m = b.dataset.pick; boxes.forEach((x) => { x.checked = m === 'all' || (m === 'essential' && avail[Number(x.value)].essential); }); sync();
+    });
+    f.querySelector('[data-own]').onclick = () => { modal.close(); openItemModal(); };
+    sync();
   });
 }
 
@@ -575,7 +626,7 @@ function checkout() {
 }
 async function shareList() {
   const items = sortByDue(activeItems().filter((i) => daysBetween(today(), i.nextDue) <= ui.shopHorizon));
-  const text = '🛒 Shopping list\n' + items.map((i) => `${ui.shopChecked.has(i.id) ? '☑' : '☐'} ${i.name}${i.qty > 1 ? ` ×${i.qty}${i.unit ? ' ' + i.unit : ''}` : ''}${i.store ? ` (${i.store})` : ''}`).join('\n');
+  const text = '🛒 Shopping list\n' + items.map((i) => `${ui.shopChecked.has(i.id) ? '☑' : '☐'} ${i.name}${qtyLabel(i) ? ` — ${qtyLabel(i)}` : ''}${i.store ? ` (${i.store})` : ''}`).join('\n');
   try {
     if (navigator.share) await navigator.share({ title: 'Shopping list', text });
     else { await navigator.clipboard.writeText(text); toast('List copied — paste it in WhatsApp or SMS'); }
